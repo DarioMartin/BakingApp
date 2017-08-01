@@ -19,10 +19,9 @@ public class MainActivity extends AppCompatActivity implements RecipesMainFragme
 
     @Override
     public void onRecipeSelected(Recipe recipe) {
-        Bundle b = new Bundle();
-
         final Intent intent = new Intent(this, RecipeDetailActivity.class);
-        intent.putExtras(b);
+        intent.putExtra(RecipeDetailActivity.RECIPE, recipe);
         startActivity(intent);
+
     }
 }

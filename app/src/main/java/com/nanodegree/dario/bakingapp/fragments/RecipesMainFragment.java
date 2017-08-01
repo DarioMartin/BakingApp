@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,8 +14,8 @@ import android.view.ViewGroup;
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.adapters.RecipesAdapter;
 import com.nanodegree.dario.bakingapp.model.Recipe;
+import com.nanodegree.dario.bakingapp.presenter.RecipeMainPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +28,7 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
     private GridLayoutManager layoutManager;
     private RecipesAdapter adapter;
     private OnRecipeClickListerner callback;
+    private RecipeMainPresenter presenter;
 
     public interface OnRecipeClickListerner {
         void onRecipeSelected(Recipe recipe);
@@ -63,7 +63,8 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
         adapter.setRecipeClickListener(this);
         recyclerView.setAdapter(adapter);
 
-        adapter.setRecipes(getFakeRecipes());
+        presenter = new RecipeMainPresenter(this);
+        presenter.getRecipes();
 
         return rootView;
     }
@@ -73,13 +74,10 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
         callback.onRecipeSelected(recipe);
     }
 
-    private List<Recipe> getFakeRecipes() {
-        List<Recipe> recipes = new ArrayList<>();
-        recipes.add(new Recipe("Apple Pie"));
-        recipes.add(new Recipe("Tiramisu"));
-        recipes.add(new Recipe("Pudding"));
-        recipes.add(new Recipe("Red Velvet"));
-        recipes.add(new Recipe("Strawberries"));
-        return recipes;
+
+    public void addRecipes(List<Recipe> recipes) {
+        adapter.setRecipes(recipes);
     }
+
+
 }

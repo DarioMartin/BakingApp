@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/recipe_card_height"
+    android:layout_height="@dimen/detail_card_height"
     android:layout_margin="@dimen/card_external_margin">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/card_internal_padding"
         android:gravity="center"
-        android:textSize="@dimen/recipe_card_name_size"
+        android:textSize="@dimen/recipe_step_name_size"
         tools:text="Apple Pie" />
 
 </android.support.v7.widget.CardView>
