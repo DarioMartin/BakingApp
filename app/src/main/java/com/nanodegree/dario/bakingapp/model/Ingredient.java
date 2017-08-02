@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by dariomartin on 1/8/17.
  */
 
-public class Ingredient implements Parcelable{
+public class Ingredient implements Parcelable {
 
     enum Measure {
         CUP, G, UNIT, TBLSP, TSP, K, OZ
@@ -66,5 +66,10 @@ public class Ingredient implements Parcelable{
         parcel.writeDouble(quantity);
         parcel.writeString(name);
         //parcel.writeString(this.measure.name());
+    }
+
+    @Override
+    public String toString() {
+        return quantity + " " + measure + " " + name;
     }
 }

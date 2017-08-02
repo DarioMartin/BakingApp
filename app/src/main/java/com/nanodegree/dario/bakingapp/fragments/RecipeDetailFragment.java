@@ -3,31 +3,28 @@ package com.nanodegree.dario.bakingapp.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nanodegree.dario.bakingapp.R;
-import com.nanodegree.dario.bakingapp.adapters.RecipeDetailsAdapter;
-import com.nanodegree.dario.bakingapp.adapters.RecipesAdapter;
+import com.nanodegree.dario.bakingapp.adapters.RecipeStepsAdapter;
 import com.nanodegree.dario.bakingapp.model.Recipe;
 
 /**
  * Created by dariomartin on 1/8/17.
  */
 
-public class RecipeDetailFragment extends Fragment implements RecipeDetailsAdapter.RecipeDetailsClickListener{
+public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter.RecipeDetailsClickListener{
 
     private static final String RECIPE = "FRAG_RECIPE";
     private Recipe recipe;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
-    private RecipeDetailsAdapter adapter;
+    private RecipeStepsAdapter adapter;
 
     public RecipeDetailFragment() {
 
@@ -54,7 +51,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeDetailsAdapt
         layoutManager = new LinearLayoutManager (getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new RecipeDetailsAdapter();
+        adapter = new RecipeStepsAdapter();
         adapter.setStepClickListener(this);
         recyclerView.setAdapter(adapter);
 

@@ -8,13 +8,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nanodegree.dario.bakingapp.R;
+import com.nanodegree.dario.bakingapp.model.Ingredient;
 import com.nanodegree.dario.bakingapp.model.Recipe;
+
+import java.util.List;
 
 /**
  * Created by dariomartin on 1/8/17.
  */
 
-public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdapter.StepViewHolder> {
+public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.StepViewHolder> {
 
     private final String TAG = getClass().getName();
 
@@ -25,22 +28,18 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
         void stepClicked(int step);
     }
 
-    public RecipeDetailsAdapter() {
+    public RecipeStepsAdapter() {
     }
 
     @Override
     public StepViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.step_card, parent, false);
         return new StepViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(StepViewHolder holder, int position) {
-        if (position == 0) {
-            holder.setText("Ingredients");
-        } else {
-            holder.setText(recipe.getSteps().get(position - 1).getShortDescription());
-        }
+        holder.setStep(position);
     }
 
     @Override
@@ -67,10 +66,6 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
             itemView.setOnClickListener(this);
         }
 
-        public void setText(String step) {
-            name.setText(step);
-        }
-
         @Override
         public void onClick(View v) {
             try {
@@ -78,6 +73,25 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
             } catch (NullPointerException e) {
                 Log.d(TAG, "There is no click listener set");
             }
+        }
+
+        public void setStep(int step) {
+            if (step == 0) {
+                name.setText(prepareIngredientsList(recipe.getIngredients()));
+                itemView.setEnabled(false);
+            } else {
+                name.setText(recipe.getSteps().get(step - 1).getShortDescription());
+            }
+        }
+
+        private String prepareIngredientsList(List<Ingredient> ingredients) {
+            String ingredientsText = "Ingredients\n\n";
+
+            for (Ingredient ingredient : ingredients) {
+                ingredientsText += ingredient.toString() + "\n";
+            }
+
+            return ingredientsText;
         }
     }
 
