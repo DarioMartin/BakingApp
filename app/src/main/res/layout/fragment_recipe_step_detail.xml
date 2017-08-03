@@ -20,7 +20,8 @@
         android:layout_marginBottom="@dimen/card_external_margin"
         android:layout_marginTop="@dimen/card_external_margin"
         android:layout_weight="1"
-        tools:text="Step description" />
+        tools:text="Step description"
+        android:textSize="@dimen/recipe_card_name_size"/>
 
     <Button
         android:id="@+id/next_step_button"

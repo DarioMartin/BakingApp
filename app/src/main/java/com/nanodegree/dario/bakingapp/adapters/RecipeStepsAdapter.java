@@ -1,5 +1,6 @@
 package com.nanodegree.dario.bakingapp.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.model.Ingredient;
 import com.nanodegree.dario.bakingapp.model.Recipe;
+import com.nanodegree.dario.bakingapp.utils.IngredientUtils;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
     private Recipe recipe;
     private RecipeDetailsClickListener stepClickListener;
+    private Context context;
 
     public interface RecipeDetailsClickListener {
         void stepClicked(int step);
@@ -34,6 +37,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     @Override
     public StepViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.step_card, parent, false);
+        context = view.getContext();
         return new StepViewHolder(view);
     }
 
@@ -88,7 +92,9 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
             String ingredientsText = "Ingredients\n\n";
 
             for (Ingredient ingredient : ingredients) {
-                ingredientsText += ingredient.toString() + "\n";
+                ingredientsText += "\u2022 " + ingredient.getQuantity() + " " +
+                        IngredientUtils.getIngredientName(ingredient.getMeasure(), (int) ingredient.getQuantity(), context) + " " +
+                        ingredient.getName() + "\n";
             }
 
             return ingredientsText;

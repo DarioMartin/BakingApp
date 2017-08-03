@@ -1,0 +1,7 @@
+<resources>
+    <plurals
+        name="cup_unit">
+        <item quantity="one">cup</item>
+        <item quantity="other">cups</item>
+    </plurals>
+</resources>

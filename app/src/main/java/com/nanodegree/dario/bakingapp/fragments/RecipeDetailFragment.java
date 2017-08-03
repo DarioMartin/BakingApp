@@ -30,7 +30,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
     private OnStepClickListener callback;
 
     public interface OnStepClickListener {
-        void onStepSelected(Step step);
+        void onStepSelected(int stepPosition);
     }
 
     public RecipeDetailFragment() {
@@ -80,7 +80,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
     @Override
     public void stepClicked(int step) {
         if (step > 0) {
-            callback.onStepSelected(recipe.getSteps().get(step - 1));
+            callback.onStepSelected(step - 1);
         }
     }
 }

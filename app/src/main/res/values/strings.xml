@@ -2,4 +2,12 @@
     <string name="app_name">BakingApp</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="navigate_to_next_step_button">Navigate to next stepp</string>
+    <string name="cup_unit">cup</string>
+    <string name="g_unit">g.</string>
+    <string name="k_unit">kg.</string>
+    <string name="oz_unit">oz.</string>
+    <string name="tblsp_unit">tablespoon</string>
+    <string name="tsp_unit">teaspoon</string>
+    <string name="unit_unit">unit</string>
+    <string name="unknown_unit">unknown</string>
 </resources>

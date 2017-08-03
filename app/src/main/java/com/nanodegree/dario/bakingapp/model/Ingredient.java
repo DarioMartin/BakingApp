@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.nanodegree.dario.bakingapp.utils.IngredientUtils;
 
 /**
  * Created by dariomartin on 1/8/17.
@@ -11,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Ingredient implements Parcelable {
 
-    enum Measure {
+    public enum Measure {
         CUP, G, UNIT, TBLSP, TSP, K, OZ
     }
 
@@ -48,8 +49,9 @@ public class Ingredient implements Parcelable {
         public Ingredient createFromParcel(Parcel source) {
             Ingredient ingredient = new Ingredient();
             ingredient.quantity = source.readDouble();
-            //ingredient.measure =  Measure.valueOf(source.readString());
             ingredient.name = source.readString();
+            String msr = source.readString();
+            if (msr != null) ingredient.measure = Measure.valueOf(msr);
             return ingredient;
         }
 
@@ -65,11 +67,7 @@ public class Ingredient implements Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeDouble(quantity);
         parcel.writeString(name);
-        //parcel.writeString(this.measure.name());
+        parcel.writeString(measure != null ? measure.name() : null);
     }
 
-    @Override
-    public String toString() {
-        return quantity + " " + measure + " " + name;
-    }
 }
