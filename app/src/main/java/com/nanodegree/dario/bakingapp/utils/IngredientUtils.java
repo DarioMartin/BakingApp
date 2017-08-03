@@ -22,11 +22,11 @@ public class IngredientUtils {
             case OZ:
                 return context.getString(R.string.oz_unit);
             case TBLSP:
-                return context.getString(R.string.tblsp_unit);
+                return context.getResources().getQuantityString(R.plurals.tblsp_unit, quantity);
             case TSP:
-                return context.getString(R.string.tsp_unit);
+                return context.getResources().getQuantityString(R.plurals.tsp_unit, quantity);
             case UNIT:
-                return context.getString(R.string.unit_unit);
+                return context.getResources().getQuantityString(R.plurals.unit_unit, quantity);
             default:
                 return context.getString(R.string.unknown_unit);
         }

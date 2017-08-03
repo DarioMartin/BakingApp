@@ -4,4 +4,19 @@
         <item quantity="one">cup</item>
         <item quantity="other">cups</item>
     </plurals>
+    <plurals
+        name="tblsp_unit">
+        <item quantity="one">tablespoon</item>
+        <item quantity="other">tablespoons</item>
+    </plurals>
+    <plurals
+        name="tsp_unit">
+        <item quantity="one">teaspoon</item>
+        <item quantity="other">teaspoons</item>
+    </plurals>
+    <plurals
+        name="unit_unit">
+        <item quantity="one">unit</item>
+        <item quantity="other">units</item>
+    </plurals>
 </resources>
