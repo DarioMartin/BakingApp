@@ -55,8 +55,9 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recipes_recycler_view);
 
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
 
-        layoutManager = new GridLayoutManager(getContext(), 1, OrientationHelper.VERTICAL, false);
+        layoutManager = new GridLayoutManager(getContext(), isTablet ? 3 : 1, OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new RecipesAdapter();
