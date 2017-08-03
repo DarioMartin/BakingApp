@@ -27,10 +27,10 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
     private RecyclerView recyclerView;
     private GridLayoutManager layoutManager;
     private RecipesAdapter adapter;
-    private OnRecipeClickListerner callback;
+    private OnRecipeClickListener callback;
     private RecipeMainPresenter presenter;
 
-    public interface OnRecipeClickListerner {
+    public interface OnRecipeClickListener {
         void onRecipeSelected(Recipe recipe);
     }
 
@@ -41,7 +41,7 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            callback = (OnRecipeClickListerner) context;
+            callback = (OnRecipeClickListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnRecipeClickListerner");

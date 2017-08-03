@@ -1,5 +1,6 @@
 package com.nanodegree.dario.bakingapp.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,19 +13,25 @@ import android.view.ViewGroup;
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.adapters.RecipeStepsAdapter;
 import com.nanodegree.dario.bakingapp.model.Recipe;
+import com.nanodegree.dario.bakingapp.model.Step;
 
 /**
  * Created by dariomartin on 1/8/17.
  */
 
-public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter.RecipeDetailsClickListener{
+public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter.RecipeDetailsClickListener {
 
-    private static final String RECIPE = "FRAG_RECIPE";
+    private static final String RECIPE = "FRAGMENT_RECIPE";
     private Recipe recipe;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private RecipeStepsAdapter adapter;
+    private OnStepClickListener callback;
+
+    public interface OnStepClickListener {
+        void onStepSelected(Step step);
+    }
 
     public RecipeDetailFragment() {
 
@@ -38,6 +45,16 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
         return fragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            callback = (OnStepClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnStepClickListerner");
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,7 +65,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recipe_detail_recycler_view);
 
-        layoutManager = new LinearLayoutManager (getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new RecipeStepsAdapter();
@@ -62,6 +79,8 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
 
     @Override
     public void stepClicked(int step) {
-
+        if (step > 0) {
+            callback.onStepSelected(recipe.getSteps().get(step - 1));
+        }
     }
 }

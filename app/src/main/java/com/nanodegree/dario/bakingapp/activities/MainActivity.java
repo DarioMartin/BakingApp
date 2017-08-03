@@ -5,11 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.nanodegree.dario.bakingapp.R;
-import com.nanodegree.dario.bakingapp.activities.RecipeDetailActivity;
 import com.nanodegree.dario.bakingapp.fragments.RecipesMainFragment;
 import com.nanodegree.dario.bakingapp.model.Recipe;
 
-public class MainActivity extends AppCompatActivity implements RecipesMainFragment.OnRecipeClickListerner {
+public class MainActivity extends AppCompatActivity implements RecipesMainFragment.OnRecipeClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
