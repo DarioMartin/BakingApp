@@ -129,7 +129,7 @@ public class RecipeStepDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 releasePlayer();
-                callback.onNextStep();
+                callback.onPreviousStep();
             }
         });
 
