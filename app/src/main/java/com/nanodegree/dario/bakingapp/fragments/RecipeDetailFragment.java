@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.adapters.RecipeStepsAdapter;
 import com.nanodegree.dario.bakingapp.model.Recipe;
-import com.nanodegree.dario.bakingapp.model.Step;
 
 /**
  * Created by dariomartin on 1/8/17.
@@ -78,9 +77,10 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
     }
 
     @Override
-    public void stepClicked(int step) {
+    public void stepSelected(int step) {
         if (step > 0) {
             callback.onStepSelected(step - 1);
         }
     }
+
 }

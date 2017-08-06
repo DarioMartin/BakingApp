@@ -9,7 +9,7 @@ import com.nanodegree.dario.bakingapp.model.Ingredient;
  * Created by dariomartin on 3/8/17.
  */
 
-public class IngredientUtils {
+public class Utils {
 
     public static String getIngredientName(Ingredient.Measure measure, int quantity, Context context) {
         switch (measure) {

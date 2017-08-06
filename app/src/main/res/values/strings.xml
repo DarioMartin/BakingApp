@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BakingApp</string>
     <string name="ingredients_title">Ingredients</string>
-    <string name="navigate_to_next_step_button">Navigate to next stepp</string>
+    <string name="next_step_button">Next step</string>
     <string name="cup_unit">cup</string>
     <string name="g_unit">g.</string>
     <string name="k_unit">kg.</string>
@@ -10,4 +10,28 @@
     <string name="tsp_unit">teaspoon</string>
     <string name="unit_unit">unit</string>
     <string name="unknown_unit">unknown</string>
+    <string name="previous_step_button">Previous step</string>
+
+
+    <plurals name="cup_unit">
+        <item quantity="one">cup</item>
+        <item quantity="other">cups</item>
+    </plurals>
+    <plurals name="tblsp_unit">
+        <item quantity="one">tablespoon</item>
+        <item quantity="other">tablespoons</item>
+    </plurals>
+    <plurals name="tsp_unit">
+        <item quantity="one">teaspoon</item>
+        <item quantity="other">teaspoons</item>
+    </plurals>
+    <plurals name="unit_unit">
+        <item quantity="one">unit</item>
+        <item quantity="other">units</item>
+    </plurals>
+
+    <plurals name="people">
+        <item quantity="one">person</item>
+        <item quantity="other">people</item>
+    </plurals>
 </resources>

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.model.Ingredient;
 import com.nanodegree.dario.bakingapp.model.Recipe;
-import com.nanodegree.dario.bakingapp.utils.IngredientUtils;
+import com.nanodegree.dario.bakingapp.utils.Utils;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     private Context context;
 
     public interface RecipeDetailsClickListener {
-        void stepClicked(int step);
+        void stepSelected(int step);
     }
 
     public RecipeStepsAdapter() {
@@ -73,7 +73,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         @Override
         public void onClick(View v) {
             try {
-                stepClickListener.stepClicked(getAdapterPosition());
+                stepClickListener.stepSelected(getAdapterPosition());
             } catch (NullPointerException e) {
                 Log.d(TAG, "There is no click listener set");
             }
@@ -89,11 +89,12 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         }
 
         private String prepareIngredientsList(List<Ingredient> ingredients) {
-            String ingredientsText = "Ingredients\n\n";
+            String ingredientsText = "Ingredients for " + recipe.getServings() + " " +
+                    context.getResources().getQuantityString(R.plurals.people, recipe.getServings()) + "\n\n";
 
             for (Ingredient ingredient : ingredients) {
                 ingredientsText += "\u2022 " + ingredient.getQuantity() + " " +
-                        IngredientUtils.getIngredientName(ingredient.getMeasure(), (int) ingredient.getQuantity(), context) + " " +
+                        Utils.getIngredientName(ingredient.getMeasure(), (int) ingredient.getQuantity(), context) + " " +
                         ingredient.getName() + "\n";
             }
 

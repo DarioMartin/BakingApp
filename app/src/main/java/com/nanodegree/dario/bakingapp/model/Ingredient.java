@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
-import com.nanodegree.dario.bakingapp.utils.IngredientUtils;
 
 /**
  * Created by dariomartin on 1/8/17.
