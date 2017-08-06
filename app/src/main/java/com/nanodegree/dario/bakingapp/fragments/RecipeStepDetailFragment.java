@@ -149,9 +149,7 @@ public class RecipeStepDetailFragment extends Fragment {
             image.setVisibility(View.VISIBLE);
             Picasso.with(getContext()).load(step.getThumbnailURL()).into(this.image);
         } else {
-            playerView.setVisibility(View.GONE);
-            playButton.setVisibility(View.GONE);
-            image.setVisibility(View.GONE);
+            imageContainer.setVisibility(View.GONE);
         }
     }
 
