@@ -1,10 +1,13 @@
 package com.nanodegree.dario.bakingapp.presenter;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.nanodegree.dario.bakingapp.fragments.RecipesMainFragment;
 import com.nanodegree.dario.bakingapp.model.Recipe;
+import com.nanodegree.dario.bakingapp.network.Controller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,31 +26,20 @@ public class RecipeMainPresenter {
         this.view = view;
     }
 
-    public void getRecipes(){
+    public void getRecipes() {
 
-        String recipesString = loadRecipesFromAsset();
+        Controller.getInstance().getRecipes(new Controller.RequestCallback<List<Recipe>>() {
+            @Override
+            public void onResponse(List<Recipe> recipes) {
+                view.addRecipes(recipes);
+            }
 
-        Gson gson = new GsonBuilder().create();
-        Type listType = new TypeToken<List<Recipe>>() {}.getType();
-        List<Recipe> recipes = gson.fromJson(recipesString, listType);
+            @Override
+            public void onFailure(String message) {
+            }
 
-        view.addRecipes(recipes);
-    }
+        });
 
-    public String loadRecipesFromAsset() {
-        String json = null;
-        try {
-            InputStream is = view.getContext().getAssets().open("baking_recipes.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
     }
 
 }
