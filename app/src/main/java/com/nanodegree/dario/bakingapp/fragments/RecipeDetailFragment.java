@@ -14,6 +14,9 @@ import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.adapters.RecipeStepsAdapter;
 import com.nanodegree.dario.bakingapp.model.Recipe;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by dariomartin on 1/8/17.
  */
@@ -23,7 +26,9 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
     private static final String RECIPE = "FRAGMENT_RECIPE";
     private Recipe recipe;
 
-    private RecyclerView recyclerView;
+    @BindView(R.id.recipe_detail_recycler_view)
+    RecyclerView recyclerView;
+
     private LinearLayoutManager layoutManager;
     private RecipeStepsAdapter adapter;
     private OnStepClickListener callback;
@@ -60,9 +65,9 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
 
         View rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
-        recipe = getArguments().getParcelable(RECIPE);
+        ButterKnife.bind(this, rootView);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recipe_detail_recycler_view);
+        recipe = getArguments().getParcelable(RECIPE);
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

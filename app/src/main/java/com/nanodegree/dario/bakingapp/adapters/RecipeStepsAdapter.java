@@ -15,6 +15,9 @@ import com.nanodegree.dario.bakingapp.utils.Utils;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by dariomartin on 1/8/17.
  */
@@ -62,11 +65,12 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
     class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView name;
+        @BindView(R.id.name)
+        TextView name;
 
         public StepViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.name);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 

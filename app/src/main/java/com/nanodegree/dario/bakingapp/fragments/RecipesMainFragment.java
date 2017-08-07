@@ -18,13 +18,18 @@ import com.nanodegree.dario.bakingapp.presenter.RecipeMainPresenter;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by dariomartin on 1/8/17.
  */
 
 public class RecipesMainFragment extends Fragment implements RecipesAdapter.RecipeClickListener {
 
-    private RecyclerView recyclerView;
+    @BindView(R.id.recipes_recycler_view)
+    RecyclerView recyclerView;
+
     private GridLayoutManager layoutManager;
     private RecipesAdapter adapter;
     private OnRecipeClickListener callback;
@@ -53,7 +58,7 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recipes_main, container, false);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recipes_recycler_view);
+        ButterKnife.bind(this, rootView);
 
         boolean isTablet = getResources().getBoolean(R.bool.isTablet);
 

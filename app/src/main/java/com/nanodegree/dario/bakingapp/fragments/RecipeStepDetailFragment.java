@@ -28,6 +28,9 @@ import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.model.Step;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by dariomartin on 1/8/17.
  */
@@ -40,13 +43,20 @@ public class RecipeStepDetailFragment extends Fragment {
     private static final String CURRENT_POSITION = "CURRENT_POSITION";
 
     private Step step;
-    private TextView description;
-    private ImageView image;
-    private Button nextStepButton;
+
+    @BindView(R.id.description)
+    TextView description;
+    @BindView(R.id.image_view)
+    ImageView image;
+    @BindView(R.id.next_step_button)
+    Button nextStepButton;
+    @BindView(R.id.previous_step_button)
+    Button previousStepButton;
+    @BindView(R.id.playerView)
+    SimpleExoPlayerView playerView;
+
     private StepDetailsListener callback;
     private SimpleExoPlayer exoPlayer;
-    private SimpleExoPlayerView playerView;
-    private Button previousStepButton;
     private long currentVideoPosition;
 
     public interface StepDetailsListener {
@@ -85,6 +95,8 @@ public class RecipeStepDetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_recipe_step_detail, container, false);
 
+        ButterKnife.bind(this, rootView);
+
         if (savedInstanceState != null) {
             currentVideoPosition = savedInstanceState.getLong(CURRENT_POSITION);
         }
@@ -94,16 +106,10 @@ public class RecipeStepDetailFragment extends Fragment {
         boolean isLast = getArguments().getBoolean(IS_LAST);
         boolean isFirst = getArguments().getBoolean(IS_FIRST);
 
-        description = (TextView) rootView.findViewById(R.id.description);
         description.setText(step.getDescription());
-
-        image = (ImageView) rootView.findViewById(R.id.image_view);
-
-        playerView = (SimpleExoPlayerView) rootView.findViewById(R.id.playerView);
 
         setUpMediaContent();
 
-        nextStepButton = (Button) rootView.findViewById(R.id.next_step_button);
         nextStepButton.setVisibility(isLast ? View.GONE : View.VISIBLE);
         nextStepButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +119,6 @@ public class RecipeStepDetailFragment extends Fragment {
             }
         });
 
-        previousStepButton = (Button) rootView.findViewById(R.id.previous_step_button);
         previousStepButton.setVisibility(isFirst ? View.GONE : View.VISIBLE);
         previousStepButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +162,7 @@ public class RecipeStepDetailFragment extends Fragment {
                     new DefaultDataSourceFactory(getContext(), userAgent),
                     new DefaultExtractorsFactory(), null, null);
             exoPlayer.prepare(mediaSource);
-            if(currentVideoPosition>0){
+            if (currentVideoPosition > 0) {
                 exoPlayer.setPlayWhenReady(true);
                 exoPlayer.seekTo(currentVideoPosition);
             }
