@@ -2,6 +2,7 @@ package com.nanodegree.dario.bakingapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,6 @@ import com.nanodegree.dario.bakingapp.model.Recipe;
 
 public class RecipeStepDetailActivity extends AppCompatActivity implements
         RecipeStepDetailFragment.StepDetailsListener {
-
 
     public static final String RECIPE = "RECIPE";
     public static final String CURRENT_STEP = "CURRENT_STEP";
@@ -27,6 +27,10 @@ public class RecipeStepDetailActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         recipe = intent.getExtras().getParcelable(RECIPE);
         currentStep = intent.getExtras().getInt(CURRENT_STEP);
+
+        if (savedInstanceState != null) {
+            currentStep = savedInstanceState.getInt(CURRENT_STEP);
+        }
 
         updateState(currentStep);
     }
@@ -61,4 +65,9 @@ public class RecipeStepDetailActivity extends AppCompatActivity implements
         if (currentStep != 0) updateState(currentStep - 1);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CURRENT_STEP, currentStep);
+        super.onSaveInstanceState(outState);
+    }
 }

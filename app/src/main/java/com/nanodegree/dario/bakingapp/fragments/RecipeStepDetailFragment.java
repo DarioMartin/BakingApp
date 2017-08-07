@@ -1,7 +1,6 @@
 package com.nanodegree.dario.bakingapp.fragments;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -38,18 +36,18 @@ public class RecipeStepDetailFragment extends Fragment {
 
     private static final String FRAGMENT_STEP = "FRAGMENT_STEP";
     private static final String IS_LAST = "IS_LAST";
-    private static final java.lang.String IS_FIRST = "IS_FIRST";
+    private static final String IS_FIRST = "IS_FIRST";
+    private static final String CURRENT_POSITION = "CURRENT_POSITION";
 
     private Step step;
     private TextView description;
     private ImageView image;
     private Button nextStepButton;
     private StepDetailsListener callback;
-    private RelativeLayout imageContainer;
-    private ImageView playButton;
     private SimpleExoPlayer exoPlayer;
     private SimpleExoPlayerView playerView;
     private Button previousStepButton;
+    private long currentVideoPosition;
 
     public interface StepDetailsListener {
         void onPreviousStep();
@@ -87,6 +85,10 @@ public class RecipeStepDetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_recipe_step_detail, container, false);
 
+        if (savedInstanceState != null) {
+            currentVideoPosition = savedInstanceState.getLong(CURRENT_POSITION);
+        }
+
         step = getArguments().getParcelable(FRAGMENT_STEP);
 
         boolean isLast = getArguments().getBoolean(IS_LAST);
@@ -95,21 +97,9 @@ public class RecipeStepDetailFragment extends Fragment {
         description = (TextView) rootView.findViewById(R.id.description);
         description.setText(step.getDescription());
 
-        imageContainer = (RelativeLayout) rootView.findViewById(R.id.media_container);
         image = (ImageView) rootView.findViewById(R.id.image_view);
 
         playerView = (SimpleExoPlayerView) rootView.findViewById(R.id.playerView);
-
-        playButton = (ImageView) rootView.findViewById(R.id.play_button);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (step.getVideoURL() != null && !step.getVideoURL().isEmpty()) {
-                    playButton.setVisibility(View.GONE);
-                    exoPlayer.setPlayWhenReady(true);
-                }
-            }
-        });
 
         setUpMediaContent();
 
@@ -137,19 +127,13 @@ public class RecipeStepDetailFragment extends Fragment {
     }
 
     private void setUpMediaContent() {
+        playerView.setVisibility(hasVideoUrl() ? View.VISIBLE : View.GONE);
+        image.setVisibility(hasThumbnailImage() ? View.VISIBLE : View.GONE);
+
         if (hasVideoUrl()) {
-            playerView.setVisibility(View.VISIBLE);
-            playerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(), R.drawable.video_artwork));
-            playButton.setVisibility(View.VISIBLE);
-            image.setVisibility(View.GONE);
             initializePlayer(Uri.parse(step.getVideoURL()));
         } else if (hasThumbnailImage()) {
-            playerView.setVisibility(View.GONE);
-            playButton.setVisibility(View.GONE);
-            image.setVisibility(View.VISIBLE);
             Picasso.with(getContext()).load(step.getThumbnailURL()).into(this.image);
-        } else {
-            imageContainer.setVisibility(View.GONE);
         }
     }
 
@@ -168,11 +152,15 @@ public class RecipeStepDetailFragment extends Fragment {
             exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
             playerView.setPlayer(exoPlayer);
 
-            String userAgent = Util.getUserAgent(getContext(), "RecipeVideo");
+            String userAgent = Util.getUserAgent(getContext(), getString(R.string.app_name));
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri,
                     new DefaultDataSourceFactory(getContext(), userAgent),
                     new DefaultExtractorsFactory(), null, null);
             exoPlayer.prepare(mediaSource);
+            if(currentVideoPosition>0){
+                exoPlayer.setPlayWhenReady(true);
+                exoPlayer.seekTo(currentVideoPosition);
+            }
         }
     }
 
@@ -188,5 +176,13 @@ public class RecipeStepDetailFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         releasePlayer();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (exoPlayer != null) {
+            outState.putLong(CURRENT_POSITION, exoPlayer.getCurrentPosition());
+            super.onSaveInstanceState(outState);
+        }
     }
 }
