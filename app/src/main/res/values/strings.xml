@@ -34,4 +34,7 @@
         <item quantity="one">person</item>
         <item quantity="other">people</item>
     </plurals>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="widget_error_recipes">No recipes loaded</string>
 </resources>
