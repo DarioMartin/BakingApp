@@ -3,6 +3,7 @@ package com.nanodegree.dario.bakingapp.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nanodegree.dario.bakingapp.R;
+import com.nanodegree.dario.bakingapp.activities.MainActivity;
 import com.nanodegree.dario.bakingapp.adapters.RecipesAdapter;
 import com.nanodegree.dario.bakingapp.model.Recipe;
 import com.nanodegree.dario.bakingapp.presenter.RecipeMainPresenter;
@@ -37,6 +39,7 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
 
     public interface OnRecipeClickListener {
         void onRecipeSelected(Recipe recipe);
+        void onDataLoaded();
     }
 
     public RecipesMainFragment() {
@@ -70,9 +73,14 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
         recyclerView.setAdapter(adapter);
 
         presenter = new RecipeMainPresenter(this);
-        presenter.getRecipes();
 
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.getRecipes();
     }
 
     @Override
@@ -83,6 +91,7 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
 
     public void addRecipes(List<Recipe> recipes) {
         adapter.setRecipes(recipes);
+        callback.onDataLoaded();
     }
 
 
