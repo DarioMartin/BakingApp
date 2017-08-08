@@ -28,6 +28,8 @@ public class RecipeStepDetailActivity extends AppCompatActivity implements
         recipe = intent.getExtras().getParcelable(RECIPE);
         currentStep = intent.getExtras().getInt(CURRENT_STEP);
 
+        setTitle(recipe.getName());
+
         if (savedInstanceState != null) {
             currentStep = savedInstanceState.getInt(CURRENT_STEP);
         }

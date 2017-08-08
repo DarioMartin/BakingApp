@@ -29,6 +29,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         recipe = intent.getExtras().getParcelable(RECIPE);
 
+        setTitle(recipe.getName());
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
