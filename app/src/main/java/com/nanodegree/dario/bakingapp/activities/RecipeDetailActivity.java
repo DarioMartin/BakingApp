@@ -10,6 +10,8 @@ import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.fragments.RecipeDetailFragment;
 import com.nanodegree.dario.bakingapp.fragments.RecipeStepDetailFragment;
 import com.nanodegree.dario.bakingapp.model.Recipe;
+import com.nanodegree.dario.bakingapp.utils.Utils;
+import com.nanodegree.dario.bakingapp.widget.IngredientsWidgetService;
 
 public class RecipeDetailActivity extends AppCompatActivity implements
         RecipeDetailFragment.OnStepClickListener,
@@ -29,6 +31,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         recipe = intent.getExtras().getParcelable(RECIPE);
 
+        IngredientsWidgetService.startUpdateIngredientsWidgets(this, Utils.getIngredientDescriptions(recipe.getIngredients(), this));
+
         setTitle(recipe.getName());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -46,7 +50,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements
             }
             RecipeStepDetailFragment fragment_detail = RecipeStepDetailFragment.newInstance(
                     recipe.getSteps().get(currentStep),
-                    currentStep==0,
+                    currentStep == 0,
                     isLastStep());
             fragmentTransaction.replace(R.id.container_detail, fragment_detail);
         }
@@ -70,7 +74,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 RecipeStepDetailFragment fragment_detail = RecipeStepDetailFragment.newInstance(
                         recipe.getSteps().get(currentStep),
-                        currentStep==0,
+                        currentStep == 0,
                         isLastStep());
                 fragmentTransaction.replace(R.id.container_detail, fragment_detail);
                 fragmentTransaction.commit();
@@ -94,6 +98,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements
 
     @Override
     public void onPreviousStep() {
-        if (currentStep!=0) onStepSelected(currentStep - 1);
+        if (currentStep != 0) onStepSelected(currentStep - 1);
     }
 }

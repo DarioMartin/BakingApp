@@ -24,6 +24,7 @@
         <receiver android:name=".widget.BakeryAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS" />
             </intent-filter>
 
             <meta-data
@@ -34,6 +35,8 @@
             android:name=".widget.DetailWidgetRemoteViewsService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <service android:name=".widget.IngredientsWidgetService" />
     </application>
 
 </manifest>
