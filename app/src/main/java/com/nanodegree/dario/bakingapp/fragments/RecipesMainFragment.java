@@ -1,9 +1,9 @@
 package com.nanodegree.dario.bakingapp.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -23,6 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.nanodegree.dario.bakingapp.activities.MainActivity.RECIPE_NAME;
+
 /**
  * Created by dariomartin on 1/8/17.
  */
@@ -39,6 +41,7 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
 
     public interface OnRecipeClickListener {
         void onRecipeSelected(Recipe recipe);
+
         void onDataLoaded();
     }
 
@@ -92,6 +95,26 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
     public void addRecipes(List<Recipe> recipes) {
         adapter.setRecipes(recipes);
         callback.onDataLoaded();
+
+        Intent intent = getActivity().getIntent();
+        if (intent.hasExtra(RECIPE_NAME)) {
+            String recipeName = intent.getStringExtra(RECIPE_NAME);
+            Recipe recipe = findRecipeByName(recipes, recipeName);
+            if (recipe != null) callback.onRecipeSelected(recipe);
+        }
+    }
+
+    private Recipe findRecipeByName(List<Recipe> recipes, String recipeName) {
+
+        if (recipeName != null && !recipeName.isEmpty()) {
+            for (Recipe recipe : recipes) {
+                if (recipe.getName().equalsIgnoreCase(recipeName)) {
+                    return recipe;
+                }
+            }
+        }
+
+        return null;
     }
 
 

@@ -98,7 +98,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
             for (Ingredient ingredient : ingredients) {
                 ingredientsText += "\u2022 " + ingredient.getQuantity() + " " +
-                        Utils.getIngredientName(ingredient.getMeasure(), (int) ingredient.getQuantity(), context) + " " +
+                        Utils.getIngredientDescription(ingredient, context) + " " +
                         ingredient.getName() + "\n";
             }
 
