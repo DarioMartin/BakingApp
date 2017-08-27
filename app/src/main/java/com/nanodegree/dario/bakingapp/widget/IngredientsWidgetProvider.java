@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.nanodegree.dario.bakingapp.BakingAppApplication;
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.activities.MainActivity;
 
@@ -35,7 +36,7 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
 
         //Set remote views adapter
         Intent rmIntent = new Intent(context, IngredientsRemoteViewsService.class);
-        rmIntent.putStringArrayListExtra(IngredientsRemoteViewsService.INGREDIENTS, new ArrayList<>(ingredients));
+        BakingAppApplication.widgetIngredients = ingredients;
         views.setRemoteAdapter(R.id.widget_list, rmIntent);
 
         AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_list);

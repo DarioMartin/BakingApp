@@ -2,10 +2,12 @@ package com.nanodegree.dario.bakingapp.widget;
 
 import android.content.Intent;
 import android.os.Binder;
+import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.nanodegree.dario.bakingapp.BakingAppApplication;
 import com.nanodegree.dario.bakingapp.R;
 
 import java.lang.ref.Reference;
@@ -21,6 +23,11 @@ public class IngredientsRemoteViewsService extends RemoteViewsService {
     public static final String INGREDIENTS = "ingredients";
 
     @Override
+    public IBinder onBind(Intent intent) {
+        return super.onBind(intent);
+    }
+
+    @Override
     public RemoteViewsFactory onGetViewFactory(final Intent intent) {
 
         return new RemoteViewsFactory() {
@@ -30,10 +37,12 @@ public class IngredientsRemoteViewsService extends RemoteViewsService {
             @Override
             public void onCreate() {
                 ingredients = new ArrayList<>();
+
             }
 
             @Override
             public void onDataSetChanged() {
+                ingredients = BakingAppApplication.widgetIngredients;
                 final long identityToken = Binder.clearCallingIdentity();
                 Binder.restoreCallingIdentity(identityToken);
             }
@@ -50,6 +59,8 @@ public class IngredientsRemoteViewsService extends RemoteViewsService {
 
             @Override
             public RemoteViews getViewAt(int position) {
+
+
                 RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_item);
                 views.setTextViewText(R.id.ingredient, ingredients.get(position));
                 return views;
@@ -62,7 +73,7 @@ public class IngredientsRemoteViewsService extends RemoteViewsService {
 
             @Override
             public int getViewTypeCount() {
-                return 1;
+                return ingredients.size();
             }
 
             @Override

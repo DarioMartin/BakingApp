@@ -16,33 +16,42 @@ public class Utils {
 
     public static String getIngredientDescription(Ingredient ingredient, Context context) {
 
-        Ingredient.Measure measure = ingredient.getMeasure();
-        int quantity = (int) ingredient.getQuantity();
+        double quantity = ingredient.getQuantity();
+        String measure;
 
-        switch (measure) {
+        switch (ingredient.getMeasure()) {
             case CUP:
-                return context.getResources().getQuantityString(R.plurals.cup_unit, quantity);
+                measure = context.getResources().getQuantityString(R.plurals.cup_unit, (int) quantity);
+                break;
             case G:
-                return context.getString(R.string.g_unit);
+                measure = context.getString(R.string.g_unit);
+                break;
             case K:
-                return context.getString(R.string.k_unit);
+                measure = context.getString(R.string.k_unit);
+                break;
             case OZ:
-                return context.getString(R.string.oz_unit);
+                measure = context.getString(R.string.oz_unit);
+                break;
             case TBLSP:
-                return context.getResources().getQuantityString(R.plurals.tblsp_unit, quantity);
+                measure = context.getResources().getQuantityString(R.plurals.tblsp_unit, (int) quantity);
+                break;
             case TSP:
-                return context.getResources().getQuantityString(R.plurals.tsp_unit, quantity);
+                measure = context.getResources().getQuantityString(R.plurals.tsp_unit, (int) quantity);
+                break;
             case UNIT:
-                return context.getResources().getQuantityString(R.plurals.unit_unit, quantity);
+                measure = context.getResources().getQuantityString(R.plurals.unit_unit, (int) quantity);
+                break;
             default:
-                return context.getString(R.string.unknown_unit);
+                measure = context.getString(R.string.unknown_unit);
         }
+
+        return quantity + " " + measure + " " + ingredient.getName();
     }
 
     public static ArrayList<String> getIngredientDescriptions(Recipe recipe, Context context) {
         ArrayList<String> ingredientDescriptions = new ArrayList<>();
 
-        for(Ingredient ingredient : recipe.getIngredients()){
+        for (Ingredient ingredient : recipe.getIngredients()) {
             ingredientDescriptions.add(getIngredientDescription(ingredient, context));
         }
 
