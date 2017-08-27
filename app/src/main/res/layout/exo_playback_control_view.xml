@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2016 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2016 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -17,49 +16,54 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
+    android:background="@color/player_background"
     android:layoutDirection="ltr"
-    android:background="#CC000000"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/player_top_margin"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageButton android:id="@id/exo_play"
-            style="@style/ExoMediaButton.Play"/>
+        <ImageButton
+            android:id="@id/exo_play"
+            style="@style/ExoMediaButton.Play" />
 
-        <ImageButton android:id="@id/exo_pause"
-            style="@style/ExoMediaButton.Pause"/>
+        <ImageButton
+            android:id="@id/exo_pause"
+            style="@style/ExoMediaButton.Pause" />
 
-        <TextView android:id="@id/exo_position"
+        <TextView
+            android:id="@id/exo_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
             android:includeFontPadding="false"
-            android:textColor="#FFBEBEBE"/>
+            android:paddingLeft="@dimen/player_text_padding"
+            android:paddingRight="@dimen/player_text_padding"
+            android:textColor="@color/player_text_color"
+            android:textSize="@dimen/player_text_size"
+            android:textStyle="bold" />
 
-        <SeekBar android:id="@id/exo_progress"
+        <SeekBar
+            android:id="@id/exo_progress"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
+            android:layout_height="@dimen/player_seekbar_height"
             android:layout_weight="1"
-            android:layout_height="32dp"
-            android:focusable="false"
-            style="?android:attr/progressBarStyleHorizontal"/>
+            android:focusable="false" />
 
-        <TextView android:id="@id/exo_duration"
+        <TextView
+            android:id="@id/exo_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
             android:includeFontPadding="false"
-            android:textColor="#FFBEBEBE"/>
+            android:paddingLeft="@dimen/player_text_padding"
+            android:paddingRight="@dimen/player_text_padding"
+            android:textColor="@color/player_text_color"
+            android:textSize="@dimen/player_text_size"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

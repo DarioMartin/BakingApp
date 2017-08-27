@@ -93,8 +93,9 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         }
 
         private String prepareIngredientsList(List<Ingredient> ingredients) {
-            String ingredientsText = "Ingredients for " + recipe.getServings() + " " +
-                    context.getResources().getQuantityString(R.plurals.people, recipe.getServings()) + "\n\n";
+            String ingredientsText = context.getString(R.string.ingredients_for) + " "
+                    + recipe.getServings() + " "
+                    + context.getResources().getQuantityString(R.plurals.people, recipe.getServings()) + "\n\n";
 
             for (Ingredient ingredient : ingredients) {
                 ingredientsText += "\u2022 " + Utils.getIngredientDescription(ingredient, context) + "\n";

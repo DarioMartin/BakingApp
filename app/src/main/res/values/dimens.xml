@@ -17,5 +17,10 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="bullet_margin">8dp</dimen>
     <dimen name="list_item_padding">8dp</dimen>
     <dimen name="margin_between_elements">8dp</dimen>
+    <dimen name="player_top_margin">4dp</dimen>
+    <dimen name="player_text_size">14sp</dimen>
+    <dimen name="player_text_padding">4dp</dimen>
+    <dimen name="player_seekbar_height">32dp</dimen>
+    <dimen name="widget_title_size">24sp</dimen>
 
 </resources>
