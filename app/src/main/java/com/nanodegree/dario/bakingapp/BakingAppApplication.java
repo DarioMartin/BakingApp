@@ -7,5 +7,5 @@ import java.util.ArrayList;
 
 public class BakingAppApplication extends Application {
 
-    public static ArrayList widgetIngredients = new ArrayList();
+    public static ArrayList<String> widgetIngredients = new ArrayList();
 }

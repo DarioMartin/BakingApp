@@ -10,7 +10,6 @@ import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.fragments.RecipeDetailFragment;
 import com.nanodegree.dario.bakingapp.fragments.RecipeStepDetailFragment;
 import com.nanodegree.dario.bakingapp.model.Recipe;
-import com.nanodegree.dario.bakingapp.utils.Utils;
 import com.nanodegree.dario.bakingapp.widget.IngredientsService;
 
 public class RecipeDetailActivity extends AppCompatActivity implements
@@ -61,10 +60,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements
 
     private void runIngredientsService() {
         Intent intent = new Intent(this, IngredientsService.class);
-        intent.putExtra(IngredientsService.RECIPE_NAME, recipe.getName());
-        intent.putStringArrayListExtra(IngredientsService.INGREDIENTS,
-                Utils.getIngredientDescriptions(recipe, this));
-        intent.setAction(IngredientsService.ACTION_UPDATE_INGREDIENTS);
+        intent.putExtra(IngredientsService.RECIPE, recipe);
+        intent.setAction(IngredientsService.ACTION_UPDATE_RECIPE);
         getApplicationContext().startService(intent);
     }
 

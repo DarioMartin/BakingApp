@@ -5,14 +5,11 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 
-import com.nanodegree.dario.bakingapp.R;
-
-import java.util.ArrayList;
+import com.nanodegree.dario.bakingapp.model.Recipe;
 
 public class IngredientsService extends IntentService {
-    public static final String ACTION_UPDATE_INGREDIENTS = "update_ingredients";
-    public static final String RECIPE_NAME = "recipe_name";
-    public static final String INGREDIENTS = "ingredients";
+    public static final String ACTION_UPDATE_RECIPE = "update_recipe";
+    public static final String RECIPE = "recipe_name";
 
     public IngredientsService() {
         super("IngredientsService");
@@ -22,18 +19,17 @@ public class IngredientsService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_UPDATE_INGREDIENTS.equals(action)) {
-                final String recipeName = intent.getStringExtra(RECIPE_NAME);
-                final ArrayList<String> ingredients = intent.getStringArrayListExtra(INGREDIENTS);
-                updateIngredientsWidget(recipeName, ingredients);
+            if (ACTION_UPDATE_RECIPE.equals(action)) {
+                Recipe recipe = intent.getExtras().getParcelable(RECIPE);
+                updateIngredientsWidget(recipe);
             }
         }
     }
 
-    private void updateIngredientsWidget(String recipeName, ArrayList<String> ingredients) {
+    private void updateIngredientsWidget(Recipe recipe) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, IngredientsWidgetProvider.class));
-        IngredientsWidgetProvider.updateIngredients(this, appWidgetManager, recipeName, ingredients, appWidgetIds);
+        IngredientsWidgetProvider.updateIngredients(this, appWidgetManager, recipe, appWidgetIds);
     }
 
 }

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nanodegree.dario.bakingapp.R;
-import com.nanodegree.dario.bakingapp.activities.MainActivity;
 import com.nanodegree.dario.bakingapp.adapters.RecipesAdapter;
 import com.nanodegree.dario.bakingapp.model.Recipe;
 import com.nanodegree.dario.bakingapp.presenter.RecipeMainPresenter;
@@ -22,8 +21,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.nanodegree.dario.bakingapp.activities.MainActivity.RECIPE_NAME;
 
 /**
  * Created by dariomartin on 1/8/17.
@@ -95,13 +92,6 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
     public void addRecipes(List<Recipe> recipes) {
         adapter.setRecipes(recipes);
         callback.onDataLoaded();
-
-        Intent intent = getActivity().getIntent();
-        if (intent.hasExtra(RECIPE_NAME)) {
-            String recipeName = intent.getStringExtra(RECIPE_NAME);
-            Recipe recipe = findRecipeByName(recipes, recipeName);
-            if (recipe != null) callback.onRecipeSelected(recipe);
-        }
     }
 
     private Recipe findRecipeByName(List<Recipe> recipes, String recipeName) {

@@ -5,14 +5,14 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.nanodegree.dario.bakingapp.BakingAppApplication;
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.activities.MainActivity;
-
-import java.util.ArrayList;
+import com.nanodegree.dario.bakingapp.activities.RecipeDetailActivity;
+import com.nanodegree.dario.bakingapp.model.Recipe;
+import com.nanodegree.dario.bakingapp.utils.Utils;
 
 /**
  * Implementation of App Widget functionality.
@@ -20,32 +20,32 @@ import java.util.ArrayList;
 public class IngredientsWidgetProvider extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                String recipeName, ArrayList<String> ingredients, int appWidgetId) {
-
+                                Recipe recipe, int appWidgetId) {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients);
 
         //Set title pending intent
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MainActivity.RECIPE_NAME, recipeName);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.widget_header, pendingIntent);
+        Intent mainIntent = new Intent(context, MainActivity.class);
+        PendingIntent mainPendingIntent = PendingIntent.getActivity(context, 0, mainIntent, 0);
+        views.setOnClickPendingIntent(R.id.widget_header, mainPendingIntent);
 
-        //Set title
-        views.setTextViewText(R.id.recipe_name, recipeName);
+        if (recipe != null) {
+            //Set title
+            String recipeName = recipe.getName();
+            views.setTextViewText(R.id.recipe_name, recipeName);
 
-        //Set remote views adapter
-        Intent rmIntent = new Intent(context, IngredientsRemoteViewsService.class);
-        BakingAppApplication.widgetIngredients = ingredients;
-        views.setRemoteAdapter(R.id.widget_list, rmIntent);
+            //Set remote views adapter
+            Intent rmIntent = new Intent(context, IngredientsRemoteViewsService.class);
+            BakingAppApplication.widgetIngredients = Utils.getIngredientDescriptions(recipe, context);
+            views.setRemoteAdapter(R.id.widget_list, rmIntent);
+            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_list);
 
-        AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_list);
-
-
-        //Set ingredients pending intent
-        Intent appIntent = new Intent(context, MainActivity.class);
-        PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setPendingIntentTemplate(R.id.widget_list, appPendingIntent);
+            //Set ingredients pending intent
+            Intent recipeIntent = new Intent(context, RecipeDetailActivity.class);
+            recipeIntent.putExtra(RecipeDetailActivity.RECIPE, recipe);
+            PendingIntent ingredientsPendingIntent = PendingIntent.getActivity(context, 0, recipeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            views.setOnClickPendingIntent(R.id.widget_header, ingredientsPendingIntent);
+        }
 
         //Set empty view
         views.setEmptyView(R.id.widget_list, R.id.widget_empty);
@@ -57,14 +57,14 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, context.getString(R.string.app_name), new ArrayList<String>(), appWidgetId);
+            updateAppWidget(context, appWidgetManager, null, appWidgetId);
         }
     }
 
     public static void updateIngredients(Context context, AppWidgetManager appWidgetManager,
-                                         String recipeName, ArrayList<String> ingredients, int[] appWidgetIds) {
+                                         Recipe recipe, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, recipeName, new ArrayList<>(ingredients), appWidgetId);
+            updateAppWidget(context, appWidgetManager, recipe, appWidgetId);
         }
     }
 }

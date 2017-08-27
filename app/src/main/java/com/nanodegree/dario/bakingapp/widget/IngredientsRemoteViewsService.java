@@ -3,14 +3,12 @@ package com.nanodegree.dario.bakingapp.widget;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.nanodegree.dario.bakingapp.BakingAppApplication;
 import com.nanodegree.dario.bakingapp.R;
 
-import java.lang.ref.Reference;
 import java.util.ArrayList;
 
 

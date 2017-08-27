@@ -14,7 +14,6 @@ import com.nanodegree.dario.bakingapp.idlingResources.SimpleIdlingResource;
 import com.nanodegree.dario.bakingapp.model.Recipe;
 
 public class MainActivity extends AppCompatActivity implements RecipesMainFragment.OnRecipeClickListener {
-    public static final String RECIPE_NAME = "recipe_name";
 
     @Nullable
     private SimpleIdlingResource idlingResource;
