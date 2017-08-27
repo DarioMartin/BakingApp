@@ -49,7 +49,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorAccent"
-            android:onClick="nextStep"
             android:text="@string/previous_step_button"
             android:textColor="@color/white" />
 
@@ -59,7 +58,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorAccent"
-            android:onClick="nextStep"
             android:text="@string/next_step_button"
             android:textColor="@color/white" />
 

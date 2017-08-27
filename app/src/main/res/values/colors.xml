@@ -6,5 +6,7 @@
     <color name="background">#fffef2</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="player_background">#CC000000</color>
+    <color name="player_text_color">#FFBEBEBE</color>
 
 </resources>
