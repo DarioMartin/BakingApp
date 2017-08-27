@@ -15,7 +15,6 @@ import com.nanodegree.dario.bakingapp.model.Recipe;
 
 public class MainActivity extends AppCompatActivity implements RecipesMainFragment.OnRecipeClickListener {
 
-
     @Nullable
     private SimpleIdlingResource idlingResource;
 
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements RecipesMainFragme
 
         getIdlingResource();
         if (idlingResource != null) idlingResource.setIdleState(false);
+
     }
 
     @Override

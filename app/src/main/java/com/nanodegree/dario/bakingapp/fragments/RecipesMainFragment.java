@@ -1,9 +1,9 @@
 package com.nanodegree.dario.bakingapp.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nanodegree.dario.bakingapp.R;
-import com.nanodegree.dario.bakingapp.activities.MainActivity;
 import com.nanodegree.dario.bakingapp.adapters.RecipesAdapter;
 import com.nanodegree.dario.bakingapp.model.Recipe;
 import com.nanodegree.dario.bakingapp.presenter.RecipeMainPresenter;
@@ -39,6 +38,7 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
 
     public interface OnRecipeClickListener {
         void onRecipeSelected(Recipe recipe);
+
         void onDataLoaded();
     }
 
@@ -92,6 +92,19 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
     public void addRecipes(List<Recipe> recipes) {
         adapter.setRecipes(recipes);
         callback.onDataLoaded();
+    }
+
+    private Recipe findRecipeByName(List<Recipe> recipes, String recipeName) {
+
+        if (recipeName != null && !recipeName.isEmpty()) {
+            for (Recipe recipe : recipes) {
+                if (recipe.getName().equalsIgnoreCase(recipeName)) {
+                    return recipe;
+                }
+            }
+        }
+
+        return null;
     }
 
 

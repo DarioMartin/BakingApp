@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.model.Ingredient;
+import com.nanodegree.dario.bakingapp.model.Recipe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dariomartin on 3/8/17.
@@ -14,36 +14,47 @@ import java.util.List;
 
 public class Utils {
 
-    public static String getMeasure(Ingredient.Measure measure, int quantity, Context context) {
-        switch (measure) {
+    public static String getIngredientDescription(Ingredient ingredient, Context context) {
+
+        double quantity = ingredient.getQuantity();
+        String measure;
+
+        switch (ingredient.getMeasure()) {
             case CUP:
-                return context.getResources().getQuantityString(R.plurals.cup_unit, quantity);
+                measure = context.getResources().getQuantityString(R.plurals.cup_unit, (int) quantity);
+                break;
             case G:
-                return context.getString(R.string.g_unit);
+                measure = context.getString(R.string.g_unit);
+                break;
             case K:
-                return context.getString(R.string.k_unit);
+                measure = context.getString(R.string.k_unit);
+                break;
             case OZ:
-                return context.getString(R.string.oz_unit);
+                measure = context.getString(R.string.oz_unit);
+                break;
             case TBLSP:
-                return context.getResources().getQuantityString(R.plurals.tblsp_unit, quantity);
+                measure = context.getResources().getQuantityString(R.plurals.tblsp_unit, (int) quantity);
+                break;
             case TSP:
-                return context.getResources().getQuantityString(R.plurals.tsp_unit, quantity);
+                measure = context.getResources().getQuantityString(R.plurals.tsp_unit, (int) quantity);
+                break;
             case UNIT:
-                return context.getResources().getQuantityString(R.plurals.unit_unit, quantity);
+                measure = context.getResources().getQuantityString(R.plurals.unit_unit, (int) quantity);
+                break;
             default:
-                return context.getString(R.string.unknown_unit);
+                measure = context.getString(R.string.unknown_unit);
         }
+
+        return quantity + " " + measure + " " + ingredient.getName();
     }
 
-    public static List<String> getIngredientDescriptions(List<Ingredient> ingredients, Context context) {
-        List<String> ingredientDescriptions = new ArrayList<>();
-        for(Ingredient ingredient :ingredients){
+    public static ArrayList<String> getIngredientDescriptions(Recipe recipe, Context context) {
+        ArrayList<String> ingredientDescriptions = new ArrayList<>();
+
+        for (Ingredient ingredient : recipe.getIngredients()) {
             ingredientDescriptions.add(getIngredientDescription(ingredient, context));
         }
-        return ingredientDescriptions;
-    }
 
-    public static String getIngredientDescription(Ingredient ingredient, Context context) {
-        return getMeasure(ingredient.getMeasure(), (int) ingredient.getQuantity(), context) + " " + ingredient.getName();
+        return ingredientDescriptions;
     }
 }

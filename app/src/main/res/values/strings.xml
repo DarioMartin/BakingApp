@@ -36,5 +36,5 @@
     </plurals>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
-    <string name="widget_error_recipes">No recipes loaded</string>
+    <string name="widget_error_empty">Open the app and select a recipe</string>
 </resources>
