@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.fragments.RecipeDetailFragment;
@@ -26,6 +28,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         recipe = intent.getExtras().getParcelable(RECIPE);
@@ -113,5 +117,16 @@ public class RecipeDetailActivity extends AppCompatActivity implements
     @Override
     public void onPreviousStep() {
         if (currentStep != 0) onStepSelected(currentStep - 1);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
