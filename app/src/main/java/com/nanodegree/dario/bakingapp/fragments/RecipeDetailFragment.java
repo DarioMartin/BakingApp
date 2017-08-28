@@ -2,6 +2,7 @@ package com.nanodegree.dario.bakingapp.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 
 public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter.RecipeDetailsClickListener {
 
+    private static final String RECYCLER_VIEW_STATE = "RECYCLER_VIEW_STATE";
     private static final String RECIPE = "FRAGMENT_RECIPE";
     private Recipe recipe;
 
@@ -32,6 +34,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
     private LinearLayoutManager layoutManager;
     private RecipeStepsAdapter adapter;
     private OnStepClickListener callback;
+    private Parcelable recyclerViewState;
 
     public interface OnStepClickListener {
         void onStepSelected(int stepPosition);
@@ -78,6 +81,15 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
 
         adapter.setRecipe(recipe);
 
+        if (savedInstanceState != null) {
+            recyclerViewState = savedInstanceState.getParcelable(RECYCLER_VIEW_STATE);
+        }
+
+        if (recyclerViewState != null) {
+            recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+            recyclerViewState = null;
+        }
+
         return rootView;
     }
 
@@ -86,6 +98,12 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepsAdapter
         if (step > 0) {
             callback.onStepSelected(step - 1);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(RECYCLER_VIEW_STATE, recyclerView.getLayoutManager().onSaveInstanceState());
+        super.onSaveInstanceState(outState);
     }
 
 }

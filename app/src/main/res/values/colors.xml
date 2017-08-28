@@ -8,5 +8,5 @@
     <color name="white">#FFFFFF</color>
     <color name="player_background">#CC000000</color>
     <color name="player_text_color">#FFBEBEBE</color>
-
+    <color name="white_00">#00FFFFFF</color>
 </resources>

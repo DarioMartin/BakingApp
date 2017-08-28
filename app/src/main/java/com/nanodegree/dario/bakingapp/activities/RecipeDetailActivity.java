@@ -35,8 +35,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        RecipeDetailFragment fragment = RecipeDetailFragment.newInstance(recipe);
-        fragmentTransaction.replace(R.id.container, fragment);
+        RecipeDetailFragment fragment = (RecipeDetailFragment) fragmentManager.findFragmentByTag("RecipeDetailFragment");
+
+        if (fragment == null) {
+            fragment = RecipeDetailFragment.newInstance(recipe);
+        }
+
+        fragmentTransaction.replace(R.id.container, fragment, "RecipeDetailFragment");
 
         isTablet = getResources().getBoolean(R.bool.isTablet);
 
@@ -52,10 +57,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements
             fragmentTransaction.replace(R.id.container_detail, fragment_detail);
         }
 
-        runIngredientsService();
-
         fragmentTransaction.commit();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        runIngredientsService();
     }
 
     private void runIngredientsService() {

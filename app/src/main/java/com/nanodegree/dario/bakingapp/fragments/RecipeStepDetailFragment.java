@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,11 +144,11 @@ public class RecipeStepDetailFragment extends Fragment {
     }
 
     private boolean hasVideoUrl() {
-        return step.getVideoURL() != null && !step.getVideoURL().isEmpty();
+        return !TextUtils.isEmpty(step.getVideoURL());
     }
 
     private boolean hasThumbnailImage() {
-        return step.getThumbnailURL() != null && !step.getThumbnailURL().isEmpty();
+        return !TextUtils.isEmpty(step.getThumbnailURL());
     }
 
     private void initializePlayer(Uri mediaUri) {
@@ -180,6 +181,12 @@ public class RecipeStepDetailFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        releasePlayer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
         releasePlayer();
     }
 
