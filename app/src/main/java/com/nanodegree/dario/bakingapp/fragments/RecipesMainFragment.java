@@ -1,8 +1,8 @@
 package com.nanodegree.dario.bakingapp.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.nanodegree.dario.bakingapp.R;
 import com.nanodegree.dario.bakingapp.adapters.RecipesAdapter;
@@ -28,6 +29,7 @@ import butterknife.ButterKnife;
 
 public class RecipesMainFragment extends Fragment implements RecipesAdapter.RecipeClickListener {
 
+    private static final String RECYCLER_VIEW_STATE = "RECYCLER_VIEW_STATE";
     @BindView(R.id.recipes_recycler_view)
     RecyclerView recyclerView;
 
@@ -35,6 +37,7 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
     private RecipesAdapter adapter;
     private OnRecipeClickListener callback;
     private RecipeMainPresenter presenter;
+    private Parcelable recylerViewState;
 
     public interface OnRecipeClickListener {
         void onRecipeSelected(Recipe recipe);
@@ -74,6 +77,10 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
 
         presenter = new RecipeMainPresenter(this);
 
+        if (savedInstanceState != null) {
+            recylerViewState = savedInstanceState.getParcelable(RECYCLER_VIEW_STATE);
+        }
+
         return rootView;
     }
 
@@ -92,20 +99,22 @@ public class RecipesMainFragment extends Fragment implements RecipesAdapter.Reci
     public void addRecipes(List<Recipe> recipes) {
         adapter.setRecipes(recipes);
         callback.onDataLoaded();
+        restoreLayoutManagerPosition();
     }
 
-    private Recipe findRecipeByName(List<Recipe> recipes, String recipeName) {
-
-        if (recipeName != null && !recipeName.isEmpty()) {
-            for (Recipe recipe : recipes) {
-                if (recipe.getName().equalsIgnoreCase(recipeName)) {
-                    return recipe;
-                }
-            }
+    private void restoreLayoutManagerPosition() {
+        if (recylerViewState != null) {
+            recyclerView.getLayoutManager().onRestoreInstanceState(recylerViewState);
         }
-
-        return null;
     }
 
+    public void loadFailed() {
+        Toast.makeText(getContext(), R.string.recipe_loading_error, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(RECYCLER_VIEW_STATE, recyclerView.getLayoutManager().onSaveInstanceState());
+        super.onSaveInstanceState(outState);
+    }
 }

@@ -29,10 +29,8 @@ public class RecipeMainPresenter {
 
             @Override
             public void onFailure(String message) {
+                view.loadFailed();
             }
-
         });
-
     }
-
 }
