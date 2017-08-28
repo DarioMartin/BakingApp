@@ -5,11 +5,24 @@
     android:layout_height="@dimen/recipe_card_height"
     android:layout_margin="@dimen/card_external_margin">
 
+    <ImageView
+        android:id="@+id/recipe_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/recipe_default"
+        android:alpha="0.8"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/white_gradient"/>
+
     <TextView
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="bottom"
         android:layout_margin="@dimen/card_internal_padding"
         android:gravity="center"
         android:textSize="@dimen/recipe_card_name_size"

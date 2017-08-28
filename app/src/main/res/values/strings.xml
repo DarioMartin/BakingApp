@@ -36,4 +36,5 @@
     </plurals>
     <string name="widget_error_empty">Open the app and select a recipe</string>
     <string name="ingredients_for">Ingredients for</string>
+    <string name="recipe_loading_error">No recipes has been loaded, try it again later.</string>
 </resources>
